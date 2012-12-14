@@ -120,7 +120,7 @@ function(FirstItemCompositor) {
 				clearFlag(retObj, MARKED_OOD);
 
 				//Start OOD traversal
-				markOOD(retObj);
+				retObj.markOOD(retObj);
 
 				retObj.rawVal = newVal;
 
@@ -149,7 +149,7 @@ function(FirstItemCompositor) {
 			},
 			set: function(val) {
 				retObj._compositor = val;
-				markOOD(retObj);
+				retObj.markOOD(retObj);
 			}
 		});
 
@@ -210,7 +210,7 @@ function(FirstItemCompositor) {
 		 */
 		retObj.modVal = function() {
 			var result = retObj.val;
-			markOOD(retObj);
+			retObj.markOOD(retObj);
 			return result;
 		};
 

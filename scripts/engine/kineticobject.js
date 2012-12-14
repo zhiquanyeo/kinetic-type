@@ -1,20 +1,17 @@
-define([],
-function() {
+define(['engine/numberattribute'],
+function(NumberAttribute) {
 	function constructor() {
 		
 		var that = this;
 
 		//helpers
-		function generateTransforms(elem) {
+		function generateTransforms(ktobj) {
+			var elem = ktobj.elem;
 			var transformString = '';
-			transformString += 'translate3d(' + elem._x + 'px, ' + elem._y + 'px, 0) ';
-			if (elem._rotation) {
-				transformString += 'rotate3d(0, 0, 1, ' + elem._rotation + 'deg) ';
-			}
-			if (elem._scaleX && elem._scaleY) {
-				transformString += 'scale3d(' + elem._scaleX + ', ' + elem._scaleY + ', 1) ';
-			}
-
+			transformString += 'translate3d(' + ktobj._x.val + 'px, ' + ktobj._y.val + 'px, 0) ';
+			transformString += 'rotate3d(0, 0, 1, ' + ktobj._rotation.val + 'deg) ';
+			transformString += 'scale3d(' + ktobj._scaleX.val + ', ' + ktobj._scaleY.val + ', 1) ';
+		
 			elem.style.webkitTransform = transformString;
 		}
 
@@ -34,6 +31,22 @@ function() {
 
 		}
 
+		//Set up the internal stuff
+		retObj._x = new NumberAttribute(0);
+		retObj._y = new NumberAttribute(0);
+		retObj._rotation = new NumberAttribute(0);
+		retObj._scaleX = new NumberAttribute(1);
+		retObj._scaleY = new NumberAttribute(1);
+		retObj._shearX = new NumberAttribute(0);
+		retObj._shearY = new NumberAttribute(0);
+
+		//timing and duration
+		retObj._duration = new NumberAttribute(Number.POSITIVE_INFINITY);
+		retObj._delay = new NumberAttribute(0);
+		retObj._time = new NumberAttribute(0);
+
+		//End internal set up
+
 		retObj.addToCanvas = function (canvas) {
 			canvas.appendChild(elem);
 		}
@@ -42,10 +55,16 @@ function() {
 		Object.defineProperty(retObj, "defaults", {
 			get: function() {
 				return {
-					transformOrigin: {x: '50%', y: '50%'},
+					transformOrigin: {x: '50%', y: '50%'}
 				}
 			}
-		})
+		});
+
+		/*
+		The general idea: 
+		Each property here is actually backed by a NumberAttribute, which
+		we then use to change the values needed by the elem
+		*/
 
 		//Property Definitions
 		Object.defineProperty(retObj, 'transformOrigin', {
@@ -59,68 +78,69 @@ function() {
 				elem._transformOrigin = val;
 				generateTransformOrigin(elem);
 			}
-		})
+		});
+
 		Object.defineProperty(retObj, "x", {
 			get: function() {
-				return elem._x;
+				return retObj._x.val;
 			},
 			set: function(val) {
-				elem._x = val;
-				generateTransforms(elem);
+				retObj._x.val = val;
+				generateTransforms(retObj);
 			}
 		});
 
 		Object.defineProperty(retObj, "y", {
 			get: function() {
-				return elem._y;
+				return retObj._y.val;
 			},
 			set: function(val) {
-				elem._y = val;
-				generateTransforms(elem);
+				retObj._y.val = val;
+				generateTransforms(retObj);
 			}
 		});
 
 		Object.defineProperty(retObj, "rotation", {
 			get: function() {
-				return elem._rotation;
+				return retObj._rotation.val;
 			},
 			set: function(val) {
-				elem._rotation = val;
-				generateTransforms(elem);
+				retObj._rotation.val = val;
+				generateTransforms(retObj);
 			}
 		});
 
 		Object.defineProperty(retObj, "scale", {
 			get: function() {
 				//only return a value if scaleX and scaleY are the same
-				if (elem._scaleX === elem._scaleY)
-					return elem._scaleX;
+				if (retObj._scaleX.val === retObj._scaleY.val)
+					return retObj._scaleX.val;
 				return undefined;
 			},
 			set: function(val) {
-				elem._scaleX = val;
-				elem._scaleY = val;
-				generateTransforms(elem);
+				retObj._scaleX.val = val;
+				retObj._scaleY.val = val;
+				generateTransforms(retObj);
 			}
 		});
 
 		Object.defineProperty(retObj, "scaleX", {
 			get: function() {
-				return elem._scaleX;
+				return retObj._scaleX.val;
 			},
 			set: function(val) {
-				elem._scaleX = val;
-				generateTransforms(elem);
+				retObj._scaleX.val = val;
+				generateTransforms(retObj);
 			}
 		});
 
 		Object.defineProperty(retObj, "scaleY", {
 			get: function() {
-				return elem._scaleY;
+				return retObj._scaleY.val;
 			},
 			set: function(val) {
-				elem._scaleY = val;
-				generateTransforms(elem);
+				retObj._scaleY.val = val;
+				generateTransforms(retObj);
 			}
 		});
 
