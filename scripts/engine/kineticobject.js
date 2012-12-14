@@ -54,20 +54,20 @@ function(NumberAttribute) {
 		retObj.addToCanvas = function (canvas) {
 			canvas.appendChild(elem);
 			retObj._canvas = canvas;
-		}
+		};
 
 		//Defaults
 		Object.defineProperty(retObj, "defaults", {
 			get: function() {
 				return {
 					transformOrigin: {x: '50%', y: '50%'}
-				}
+				};
 			}
 		});
 
 
 		/*
-		The general idea: 
+		The general idea:
 		Each property here is actually backed by a NumberAttribute, which
 		we then use to change the values needed by the elem
 		*/
@@ -160,7 +160,7 @@ function(NumberAttribute) {
 			get: function() {
 				return elem.offsetHeight;
 			}
-		})
+		});
 
 		Object.defineProperty(retObj, "elem", {
 			get: function() {
