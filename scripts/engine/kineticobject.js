@@ -241,6 +241,14 @@ function(NumberAttribute) {
 		retObj.draw = function() {
 			//TODO Implement
 			//Basically generate all the transforms
+			if (retObj._currTimeState === POSTTIME || retObj._currTimeState === PRETIME) {
+				retObj.elem.style.display = 'none';
+			}
+			else {
+				retObj.elem.style.display = 'block';
+			}
+
+			generateTransforms(retObj);
 		};
 
 		retObj.getCurrTimeState = function() {
