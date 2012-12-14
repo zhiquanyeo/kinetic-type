@@ -12,6 +12,15 @@ function(KineticObject) {
 			}
 		});
 
+		Object.defineProperty(retObj, "fontSize", {
+			get: function() {
+				return parseFloat(retObj.elem.style.fontSize);
+			},
+			set: function(val) {
+				retObj.elem.style.fontSize = val + 'px';
+			}
+		})
+
 		return retObj;
 	}
 

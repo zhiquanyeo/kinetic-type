@@ -31,8 +31,10 @@ function(KTObject, KTText) {
     	var angleVal = ((evt.clientY / 100) * 360) % 360;
     	elem2.rotation = angleVal;
 
-    	elem1.x = evt.clientX;
-    	elem1.y = evt.clientY;
+    	elem1.x = evt.clientX - (elem1.width / 2);
+    	elem1.y = evt.clientY - (elem1.height / 2);
+
+        text1.fontSize = evt.clientY / 10;
     }, false);
 
 });
