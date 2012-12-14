@@ -1,5 +1,5 @@
-define([],
-function() {
+define(['engine/compositor/firstitemcompositor'],
+function(FirstItemCompositor) {
 	/**
 	 * The KTAttribute interface defines an API for values which can be controlled
 	 * by constraints. Relationships can be established between KTAttribute objects
@@ -235,12 +235,7 @@ function() {
 		initializeValue(retObj, initialVal);
 
 		if (!initialCompositor) {
-			retObj._compositor = {
-				calculateValue: function(a,b) {
-					//TODO implement
-					return retObj.val;
-				}
-			};
+			retObj._compositor = new FirstItemCompositor();
 		}
 
 		return retObj;

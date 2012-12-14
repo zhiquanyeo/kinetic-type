@@ -1,6 +1,6 @@
 //Bootstrap file
-require(['engine/kineticobject', 'engine/kttext', 'engine/ktattribute'],
-function(KTObject, KTText, KTAttribute) {
+require(['engine/kineticobject', 'engine/kttext', 'engine/numberattribute'],
+function(KTObject, KTText, NumberAttribute) {
     console.log('Bootstrapping Application');
     //console.log(KTObject);
 
@@ -38,7 +38,7 @@ function(KTObject, KTText, KTAttribute) {
     }, false);
 
     //KTAttribute testing
-    var attr1 = new KTAttribute(1);
-    console.log(attr1.val);
+    var attr1 = new NumberAttribute(1);
+    console.log(attr1.numberVal);
 
 });
