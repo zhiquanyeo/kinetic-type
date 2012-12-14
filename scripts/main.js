@@ -1,6 +1,6 @@
 //Bootstrap file
-require(['engine/kineticobject', 'engine/kttext'],
-function(KTObject, KTText) {
+require(['engine/kineticobject', 'engine/kttext', 'engine/ktattribute'],
+function(KTObject, KTText, KTAttribute) {
     console.log('Bootstrapping Application');
     //console.log(KTObject);
 
@@ -36,5 +36,9 @@ function(KTObject, KTText) {
 
         text1.fontSize = evt.clientY / 10;
     }, false);
+
+    //KTAttribute testing
+    var attr1 = new KTAttribute(1);
+    console.log(attr1.val);
 
 });
