@@ -1,8 +1,11 @@
 define(['engine/numberattribute'],
 function(NumberAttribute) {
-	function constructor() {
+	function constructor(name, delay, duration) {
 		
 		var that = this;
+		var PRETIME = 0;
+		var INTIME = 1;
+		var POSTTIME = 2;
 
 		//helpers
 		function generateTransforms(ktobj) {
@@ -23,10 +26,6 @@ function(NumberAttribute) {
 		var elem = document.createElement('div');
 		elem.classList.add('kinetic');
 
-		//Set default position
-		elem._x = 0;
-		elem._y = 0;
-
 		function retObj() {
 
 		}
@@ -45,10 +44,16 @@ function(NumberAttribute) {
 		retObj._delay = new NumberAttribute(0);
 		retObj._time = new NumberAttribute(0);
 
+		retObj._name = null;
+		retObj._currTimeState = PRETIME;
+		retObj._canvas = null;
+		retObj._visible = true;
+
 		//End internal set up
 
 		retObj.addToCanvas = function (canvas) {
 			canvas.appendChild(elem);
+			retObj._canvas = canvas;
 		}
 
 		//Defaults
@@ -59,6 +64,7 @@ function(NumberAttribute) {
 				}
 			}
 		});
+
 
 		/*
 		The general idea: 
@@ -164,6 +170,88 @@ function(NumberAttribute) {
 				elem = val;
 			}
 		});
+
+		Object.defineProperty(retObj, 'visible', {
+			get: function() {
+				return retObj._visible;
+			},
+			set: function(val) {
+				retObj._visible = val;
+			}
+		});
+
+		Object.defineProperty(retObj, 'duration', {
+			get: function() {
+				return retObj._duration.val;
+			},
+			set: function(val) {
+				retObj._duration.val = val;
+			}
+		});
+
+		Object.defineProperty(retObj, 'delay', {
+			get: function() {
+				return retObj._delay.val;
+			},
+			set: function(val) {
+				retObj._delay.val = val;
+			}
+		});
+
+		Object.defineProperty(retObj, 'time', {
+			get: function() {
+				return retObj._time.val;
+			},
+			set: function(val) {
+				retObj._time.val = val;
+			}
+		});
+
+		//Public Methods
+
+		retObj.getName = function() {
+			return retObj._name;
+		};
+
+		/**
+		 * This function updates the time state of this object, and then updates
+		 * the time. On the update pass in the main engine, all the KineticObjects
+		 * will be update()-d with their own copy of the timeline (after translation)
+		 */
+		retObj.update = function(timeline) {
+			var tempT = timeline.getTime();
+
+			// We are interested in the following:
+			// 1. Timeline time is NOT NaN and _currTimeState is PRETIME
+			// 2. Timeline time is NaN and _currTimeState is INTIME
+			if (retObj._currTimeState === PRETIME && !isNaN(tempT)) {
+				//Set the state to INTIME
+				retObj._currTimeState = INTIME;
+			}
+			else if (retObj._currTimeState === INTIME && isNaN(tempT)) {
+				retObj._currTimeState = POSTTIME;
+			}
+
+			//Only change if we are INTIME
+			if (retObj._currTimeState === INTIME) {
+				retObj._time.val = tempT;
+			}
+		};
+
+		retObj.draw = function() {
+			//TODO Implement
+			//Basically generate all the transforms
+		};
+
+		retObj.getCurrTimeState = function() {
+			return retObj._currTimeState;
+		};
+
+
+		//=== Object Init ===
+		retObj._name = name;
+		retObj._delay.val = delay || 0;
+		retObj._duration.val = duration || Number.POSITIVE_INFINITY;
 
 		return retObj;
 	}
