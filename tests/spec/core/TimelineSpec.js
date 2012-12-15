@@ -24,6 +24,6 @@ describe('Timeline', function() {
 			var timeline2 = this.timeline1.clone();
 			this.timeline1.setClipDuration(2222);
 			expect(JSON.stringify(this.timeline1._dbgDataDump()) === JSON.stringify(timeline2._dbgDataDump())).toEqual(false);
-		})
-	})
+		});
+	});
 });

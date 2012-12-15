@@ -11,7 +11,7 @@ function(NumberAttribute) {
 		function generateTransforms(ktobj) {
 			var elem = ktobj.elem;
 			var transformString = '';
-			transformString += 'translate3d(' + ktobj._x.val + 'px, ' + ktobj._y.val + 'px, 0) ';
+			transformString += 'translate3d(' + ktobj._x.val + 'px, ' + ktobj._y.val + 'px, 0px) ';
 			transformString += 'rotate3d(0, 0, 1, ' + ktobj._rotation.val + 'deg) ';
 			transformString += 'scale3d(' + ktobj._scaleX.val + ', ' + ktobj._scaleY.val + ', 1) ';
 		
