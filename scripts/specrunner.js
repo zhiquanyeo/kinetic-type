@@ -31,6 +31,7 @@ function(jasmine) {
 	var specs = [];
 
 	specs.push('spec/core/KTObjectSpec');
+	specs.push('spec/core/KTAttributeSpec');
 	specs.push('spec/core/ConstraintContainerSpec');
 	specs.push('spec/core/TimelineSpec');
 

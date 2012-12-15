@@ -59,19 +59,4 @@ describe('KTObject', function() {
 		});
 	});
 
-	describe('Constraints', function() {
-		it('should return the correct values based on constraints', function() {
-			var ktObject1 = this.ktObject1;
-			var ktObject2 = this.ktObject2;
-
-			function linearConstraint(usedBy) {
-				return ktObject2.xAttr.useVal(usedBy) + 10;
-			}
-
-			ktObject1.xAttr.addConstraint(linearConstraint);
-			ktObject2.x = 10;
-
-			expect(this.ktObject1.x).toBe(20);
-		});
-	});
 });
