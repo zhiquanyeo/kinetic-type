@@ -11,7 +11,7 @@ function() {
 				return targetAttribute.rawVal;
 			}
 			else {
-				var constraint = (constraintArray[0]).getConstraint();
+				var constraint = (constraintArray[0]).constraint;
 				return constraint(targetAttribute);
 			}
 		}

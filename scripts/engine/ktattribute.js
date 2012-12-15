@@ -1,5 +1,5 @@
-define(['engine/compositor/firstitemcompositor'],
-function(FirstItemCompositor) {
+define(['engine/compositor/firstitemcompositor', 'engine/constraintcontainer'],
+function(FirstItemCompositor, ConstraintContainer) {
 	/**
 	 * The KTAttribute interface defines an API for values which can be controlled
 	 * by constraints. Relationships can be established between KTAttribute objects
@@ -202,7 +202,7 @@ function(FirstItemCompositor) {
 		 * Adds a constraint of this attribute
 		 */
 		retObj.addConstraint = function(newConstraint) {
-			retObj._constraintArray.push(newConstraint);
+			retObj._constraintArray.push(new ConstraintContainer(newConstraint));
 		};
 
 		/**

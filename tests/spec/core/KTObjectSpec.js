@@ -4,6 +4,7 @@ describe('KTObject', function() {
 		var flag = false;
 		require(['engine/kineticobject'], function(KTObject) {
 			that.ktObject1 = new KTObject('TestObject',0,5);
+			that.ktObject2 = new KTObject('TestObject2', 0, 5);
 			flag = true;
 		});
 
@@ -55,6 +56,22 @@ describe('KTObject', function() {
 			this.ktObject1.scaleX = 2;
 			this.ktObject1.scaleY = 8;
 			expect(this.ktObject1.elem.style.webkitTransform).toMatch(/scale3d\(2, 8, 1\)/);
+		});
+	});
+
+	describe('Constraints', function() {
+		it('should return the correct values based on constraints', function() {
+			var ktObject1 = this.ktObject1;
+			var ktObject2 = this.ktObject2;
+
+			function linearConstraint(usedBy) {
+				return ktObject2.xAttr.useVal(usedBy) + 10;
+			}
+
+			ktObject1.xAttr.addConstraint(linearConstraint);
+			ktObject2.x = 10;
+
+			expect(this.ktObject1.x).toBe(20);
 		});
 	});
 });

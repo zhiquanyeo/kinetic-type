@@ -1,27 +1,30 @@
 define(['engine/kineticobject'],
-function(KineticObject) {
-	function constructor() {
-		var retObj = new KineticObject();
+function(KTObject) {
+	function constructor(name, displayString, textFormat, delay, duration) {
+		
+		var KTText = new KTObject(name, delay, duration);
 
-		Object.defineProperty(retObj, "text", {
+		KTText.elem.innerText = displayString;
+
+		Object.defineProperty(KTText, "text", {
 			get: function () {
-				return retObj.elem.innerText;
+				return KTText.elem.innerText;
 			},
 			set: function(val) {
-				retObj.elem.innerText = val;
+				KTText.elem.innerText = val;
 			}
 		});
 
-		Object.defineProperty(retObj, "fontSize", {
+		Object.defineProperty(KTText, "fontSize", {
 			get: function() {
-				return parseFloat(retObj.elem.style.fontSize);
+				return parseFloat(KTText.elem.style.fontSize);
 			},
 			set: function(val) {
-				retObj.elem.style.fontSize = val + 'px';
+				KTText.elem.style.fontSize = val + 'px';
 			}
-		})
+		});
 
-		return retObj;
+		return KTText;
 	}
 
 	return constructor;

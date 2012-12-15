@@ -109,6 +109,12 @@ function(NumberAttribute) {
 			}
 		});
 
+		Object.defineProperty(KTObject, 'xAttr', {
+			get: function() {
+				return KTObject._x;
+			}
+		});
+
 		Object.defineProperty(KTObject, "y", {
 			get: function() {
 				return KTObject._y.val;
@@ -119,6 +125,12 @@ function(NumberAttribute) {
 			}
 		});
 
+		Object.defineProperty(KTObject, 'yAttr', {
+			get: function() {
+				return KTObject._y;
+			}
+		});
+
 		Object.defineProperty(KTObject, "rotation", {
 			get: function() {
 				return KTObject._rotation.val;
@@ -126,6 +138,12 @@ function(NumberAttribute) {
 			set: function(val) {
 				KTObject._rotation.val = val;
 				generateTransforms(KTObject);
+			}
+		});
+
+		Object.defineProperty(KTObject, 'rotationAttr', {
+			get: function() {
+				return KTObject._rotation;
 			}
 		});
 
@@ -153,6 +171,12 @@ function(NumberAttribute) {
 			}
 		});
 
+		Object.defineProperty(KTObject, 'scaleXAttr', {
+			get: function() {
+				return KTObject._scaleX;
+			}
+		});
+
 		Object.defineProperty(KTObject, "scaleY", {
 			get: function() {
 				return KTObject._scaleY.val;
@@ -160,6 +184,12 @@ function(NumberAttribute) {
 			set: function(val) {
 				KTObject._scaleY.val = val;
 				generateTransforms(KTObject);
+			}
+		});
+
+		Object.defineProperty(KTObject, 'scaleYAttr', {
+			get: function() {
+				return KTObject._scaleY;
 			}
 		});
 
@@ -202,6 +232,12 @@ function(NumberAttribute) {
 			}
 		});
 
+		Object.defineProperty(KTObject, 'durationAttr', {
+			get: function() {
+				return KTObject._duration;
+			}
+		});
+
 		Object.defineProperty(KTObject, 'delay', {
 			get: function() {
 				return KTObject._delay.val;
@@ -211,12 +247,24 @@ function(NumberAttribute) {
 			}
 		});
 
+		Object.defineProperty(KTObject, 'delayAttr', {
+			get: function() {
+				return KTObject._delay;
+			}
+		});
+
 		Object.defineProperty(KTObject, 'time', {
 			get: function() {
 				return KTObject._time.val;
 			},
 			set: function(val) {
 				KTObject._time.val = val;
+			}
+		});
+
+		Object.defineProperty(KTObject, 'timeAttr', {
+			get: function() {
+				return KTObject._time;
 			}
 		});
 
