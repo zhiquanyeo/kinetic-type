@@ -26,38 +26,38 @@ function(NumberAttribute) {
 		var elem = document.createElement('div');
 		elem.classList.add('kinetic');
 
-		function retObj() {
+		function KTObject() {
 
 		}
 
 		//Set up the internal stuff
-		retObj._x = new NumberAttribute(0);
-		retObj._y = new NumberAttribute(0);
-		retObj._rotation = new NumberAttribute(0);
-		retObj._scaleX = new NumberAttribute(1);
-		retObj._scaleY = new NumberAttribute(1);
-		retObj._shearX = new NumberAttribute(0);
-		retObj._shearY = new NumberAttribute(0);
+		KTObject._x = new NumberAttribute(0);
+		KTObject._y = new NumberAttribute(0);
+		KTObject._rotation = new NumberAttribute(0);
+		KTObject._scaleX = new NumberAttribute(1);
+		KTObject._scaleY = new NumberAttribute(1);
+		KTObject._shearX = new NumberAttribute(0);
+		KTObject._shearY = new NumberAttribute(0);
 
 		//timing and duration
-		retObj._duration = new NumberAttribute(Number.POSITIVE_INFINITY);
-		retObj._delay = new NumberAttribute(0);
-		retObj._time = new NumberAttribute(0);
+		KTObject._duration = new NumberAttribute(Number.POSITIVE_INFINITY);
+		KTObject._delay = new NumberAttribute(0);
+		KTObject._time = new NumberAttribute(0);
 
-		retObj._name = null;
-		retObj._currTimeState = PRETIME;
-		retObj._canvas = null;
-		retObj._visible = true;
+		KTObject._name = null;
+		KTObject._currTimeState = PRETIME;
+		KTObject._canvas = null;
+		KTObject._visible = true;
 
 		//End internal set up
 
-		retObj.addToCanvas = function (canvas) {
+		KTObject.addToCanvas = function (canvas) {
 			canvas.appendChild(elem);
-			retObj._canvas = canvas;
+			KTObject._canvas = canvas;
 		};
 
 		//Defaults
-		Object.defineProperty(retObj, "defaults", {
+		Object.defineProperty(KTObject, "defaults", {
 			get: function() {
 				return {
 					transformOrigin: {x: '50%', y: '50%'}
@@ -66,15 +66,15 @@ function(NumberAttribute) {
 		});
 
 		//Enums
-		Object.defineProperty(retObj, 'enums', {
+		Object.defineProperty(KTObject, 'enums', {
 			get: function() {
 				return {
 					timeState: {
 						INTIME: INTIME,
 						PRETIME: PRETIME,
-						POSTTIME: POSTTIME,
+						POSTTIME: POSTTIME
 					}
-				}
+				};
 			}
 		});
 
@@ -86,7 +86,7 @@ function(NumberAttribute) {
 		*/
 
 		//Property Definitions
-		Object.defineProperty(retObj, 'transformOrigin', {
+		Object.defineProperty(KTObject, 'transformOrigin', {
 			get: function() {
 				return elem._transformOrigin;
 			},
@@ -99,83 +99,83 @@ function(NumberAttribute) {
 			}
 		});
 
-		Object.defineProperty(retObj, "x", {
+		Object.defineProperty(KTObject, "x", {
 			get: function() {
-				return retObj._x.val;
+				return KTObject._x.val;
 			},
 			set: function(val) {
-				retObj._x.val = val;
-				generateTransforms(retObj);
+				KTObject._x.val = val;
+				generateTransforms(KTObject);
 			}
 		});
 
-		Object.defineProperty(retObj, "y", {
+		Object.defineProperty(KTObject, "y", {
 			get: function() {
-				return retObj._y.val;
+				return KTObject._y.val;
 			},
 			set: function(val) {
-				retObj._y.val = val;
-				generateTransforms(retObj);
+				KTObject._y.val = val;
+				generateTransforms(KTObject);
 			}
 		});
 
-		Object.defineProperty(retObj, "rotation", {
+		Object.defineProperty(KTObject, "rotation", {
 			get: function() {
-				return retObj._rotation.val;
+				return KTObject._rotation.val;
 			},
 			set: function(val) {
-				retObj._rotation.val = val;
-				generateTransforms(retObj);
+				KTObject._rotation.val = val;
+				generateTransforms(KTObject);
 			}
 		});
 
-		Object.defineProperty(retObj, "scale", {
+		Object.defineProperty(KTObject, "scale", {
 			get: function() {
 				//only return a value if scaleX and scaleY are the same
-				if (retObj._scaleX.val === retObj._scaleY.val)
-					return retObj._scaleX.val;
+				if (KTObject._scaleX.val === KTObject._scaleY.val)
+					return KTObject._scaleX.val;
 				return undefined;
 			},
 			set: function(val) {
-				retObj._scaleX.val = val;
-				retObj._scaleY.val = val;
-				generateTransforms(retObj);
+				KTObject._scaleX.val = val;
+				KTObject._scaleY.val = val;
+				generateTransforms(KTObject);
 			}
 		});
 
-		Object.defineProperty(retObj, "scaleX", {
+		Object.defineProperty(KTObject, "scaleX", {
 			get: function() {
-				return retObj._scaleX.val;
+				return KTObject._scaleX.val;
 			},
 			set: function(val) {
-				retObj._scaleX.val = val;
-				generateTransforms(retObj);
+				KTObject._scaleX.val = val;
+				generateTransforms(KTObject);
 			}
 		});
 
-		Object.defineProperty(retObj, "scaleY", {
+		Object.defineProperty(KTObject, "scaleY", {
 			get: function() {
-				return retObj._scaleY.val;
+				return KTObject._scaleY.val;
 			},
 			set: function(val) {
-				retObj._scaleY.val = val;
-				generateTransforms(retObj);
+				KTObject._scaleY.val = val;
+				generateTransforms(KTObject);
 			}
 		});
 
-		Object.defineProperty(retObj, 'width', {
+		Object.defineProperty(KTObject, 'width', {
 			get: function() {
 				return elem.offsetWidth;
 			}
 		});
 
-		Object.defineProperty(retObj, 'height', {
+		Object.defineProperty(KTObject, 'height', {
 			get: function() {
 				return elem.offsetHeight;
 			}
 		});
 
-		Object.defineProperty(retObj, "elem", {
+		Object.defineProperty(KTObject, "elem", {
 			get: function() {
 				return elem;
 			},
@@ -184,55 +184,55 @@ function(NumberAttribute) {
 			}
 		});
 
-		Object.defineProperty(retObj, 'visible', {
+		Object.defineProperty(KTObject, 'visible', {
 			get: function() {
-				return retObj._visible;
+				return KTObject._visible;
 			},
 			set: function(val) {
-				retObj._visible = val;
+				KTObject._visible = val;
 			}
 		});
 
-		Object.defineProperty(retObj, 'duration', {
+		Object.defineProperty(KTObject, 'duration', {
 			get: function() {
-				return retObj._duration.val;
+				return KTObject._duration.val;
 			},
 			set: function(val) {
-				retObj._duration.val = val;
+				KTObject._duration.val = val;
 			}
 		});
 
-		Object.defineProperty(retObj, 'delay', {
+		Object.defineProperty(KTObject, 'delay', {
 			get: function() {
-				return retObj._delay.val;
+				return KTObject._delay.val;
 			},
 			set: function(val) {
-				retObj._delay.val = val;
+				KTObject._delay.val = val;
 			}
 		});
 
-		Object.defineProperty(retObj, 'time', {
+		Object.defineProperty(KTObject, 'time', {
 			get: function() {
-				return retObj._time.val;
+				return KTObject._time.val;
 			},
 			set: function(val) {
-				retObj._time.val = val;
+				KTObject._time.val = val;
 			}
 		});
 
-		Object.defineProperty(retObj, 'currTimeState', {
+		Object.defineProperty(KTObject, 'currTimeState', {
 			get: function() {
-				return retObj._currTimeState;
+				return KTObject._currTimeState;
 			},
 			set: function(val) {
-				retObj._currTimeState = val;
+				KTObject._currTimeState = val;
 			}
 		});
 
 		//Public Methods
 
-		retObj.getName = function() {
-			return retObj._name;
+		KTObject.getName = function() {
+			return KTObject._name;
 		};
 
 		/**
@@ -240,50 +240,50 @@ function(NumberAttribute) {
 		 * the time. On the update pass in the main engine, all the KineticObjects
 		 * will be update()-d with their own copy of the timeline (after translation)
 		 */
-		retObj.update = function(timeline) {
+		KTObject.update = function(timeline) {
 			var tempT = timeline.getTime();
 
 			// We are interested in the following:
 			// 1. Timeline time is NOT NaN and _currTimeState is PRETIME
 			// 2. Timeline time is NaN and _currTimeState is INTIME
-			if (retObj._currTimeState === PRETIME && !isNaN(tempT)) {
+			if (KTObject._currTimeState === PRETIME && !isNaN(tempT)) {
 				//Set the state to INTIME
-				retObj._currTimeState = INTIME;
+				KTObject._currTimeState = INTIME;
 			}
-			else if (retObj._currTimeState === INTIME && isNaN(tempT)) {
-				retObj._currTimeState = POSTTIME;
+			else if (KTObject._currTimeState === INTIME && isNaN(tempT)) {
+				KTObject._currTimeState = POSTTIME;
 			}
 
 			//Only change if we are INTIME
-			if (retObj._currTimeState === INTIME) {
-				retObj._time.val = tempT;
+			if (KTObject._currTimeState === INTIME) {
+				KTObject._time.val = tempT;
 			}
 		};
 
-		retObj.draw = function() {
+		KTObject.draw = function() {
 			//TODO Implement
 			//Basically generate all the transforms
-			if (retObj._currTimeState === POSTTIME || retObj._currTimeState === PRETIME) {
-				retObj.elem.style.display = 'none';
+			if (KTObject._currTimeState === POSTTIME || KTObject._currTimeState === PRETIME) {
+				KTObject.elem.style.display = 'none';
 			}
 			else {
-				retObj.elem.style.display = 'block';
+				KTObject.elem.style.display = 'block';
 			}
 
-			generateTransforms(retObj);
+			generateTransforms(KTObject);
 		};
 
-		retObj.getCurrTimeState = function() {
-			return retObj._currTimeState;
+		KTObject.getCurrTimeState = function() {
+			return KTObject._currTimeState;
 		};
 
 
 		//=== Object Init ===
-		retObj._name = name;
-		retObj._delay.val = delay || 0;
-		retObj._duration.val = duration || Number.POSITIVE_INFINITY;
+		KTObject._name = name;
+		KTObject._delay.val = delay || 0;
+		KTObject._duration.val = duration || Number.POSITIVE_INFINITY;
 
-		return retObj;
+		return KTObject;
 	}
 
 	return constructor;

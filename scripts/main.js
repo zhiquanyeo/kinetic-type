@@ -55,13 +55,5 @@ function(KTObject, KTText, NumberAttribute, ConstraintContainer, KTSequence) {
     }
 
     var seq = new KTSequence('hi');
-    console.log('For KTSequence');
-    for (var k in seq) {
-        console.log(k + ' => ' + seq[k]);
-    }
-
-    console.log('KTSequence prototype');
-    for (var k in seq.prototype) {
-        console.log(k + ' => ' + seq.prototype[k]);
-    }
+    
 });
