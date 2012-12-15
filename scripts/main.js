@@ -1,6 +1,10 @@
 //Bootstrap file
-require(['engine/kineticobject', 'engine/kttext', 'engine/numberattribute'],
-function(KTObject, KTText, NumberAttribute) {
+require.config({
+    urlArgs: 'cb=' + Math.random(), //This is here to stop caching
+});
+require(['engine/kineticobject', 'engine/kttext', 'engine/numberattribute', 
+    'engine/constraintcontainer', 'engine/ktsequence'],
+function(KTObject, KTText, NumberAttribute, ConstraintContainer, KTSequence) {
     console.log('Bootstrapping Application');
     //console.log(KTObject);
 
@@ -41,4 +45,23 @@ function(KTObject, KTText, NumberAttribute) {
     var attr1 = new NumberAttribute(1);
     console.log(attr1.numberVal);
 
+    //ConstraintContainer test
+    function testFunc1() {
+        console.log('I am Test Func 1');
+    }
+
+    function testFunc2() {
+        console.log('I am Test Func 2');
+    }
+
+    var seq = new KTSequence('hi');
+    console.log('For KTSequence');
+    for (var k in seq) {
+        console.log(k + ' => ' + seq[k]);
+    }
+
+    console.log('KTSequence prototype');
+    for (var k in seq.prototype) {
+        console.log(k + ' => ' + seq.prototype[k]);
+    }
 });

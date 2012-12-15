@@ -65,6 +65,19 @@ function(NumberAttribute) {
 			}
 		});
 
+		//Enums
+		Object.defineProperty(retObj, 'enums', {
+			get: function() {
+				return {
+					timeState: {
+						INTIME: INTIME,
+						PRETIME: PRETIME,
+						POSTTIME: POSTTIME,
+					}
+				}
+			}
+		});
+
 
 		/*
 		The general idea:
@@ -204,6 +217,15 @@ function(NumberAttribute) {
 			},
 			set: function(val) {
 				retObj._time.val = val;
+			}
+		});
+
+		Object.defineProperty(retObj, 'currTimeState', {
+			get: function() {
+				return retObj._currTimeState;
+			},
+			set: function(val) {
+				retObj._currTimeState = val;
 			}
 		});
 
