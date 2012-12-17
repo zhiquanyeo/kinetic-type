@@ -29,7 +29,7 @@ function() {
 		var _globalClipDuration = Number.POSITIVE_INFINITY;
 
 
-		function retObj() {};
+		function retObj() {}
 
 		//Translate a timeline. Shifts the 0 second mark <timeShift> ms into the future
 		retObj.translate = function(timeShift) {
@@ -39,7 +39,7 @@ function() {
 			else {
 				_timeOffset = 0;
 			}
-		}
+		};
 
 		//Set clipping times
 		//Set up a clipping region on this timeline. A clipping region defines when an object gets calid time values
@@ -50,14 +50,14 @@ function() {
 			if (_timeOffset + timeClip < _globalClipDuration) {
 				_globalClipDuration = _timeOffset + timeClip;
 			}
-		}
+		};
 
 		retObj.getClip = function() {
 			return _clipDuration;
-		}
+		};
 
-		retObj.getTime = function(sysTime) {
-			retObj.update(sysTime);
+		retObj.getTime = function() {
+			retObj.update();
 
 			if (_globalTime - _timeOffset < 0)
 				return Number.NaN;
@@ -66,34 +66,34 @@ function() {
 			else
 				return _globalTime - _timeOffset;
 			
-		}
+		};
 
-		retObj.update = function(sysTime) {
+		retObj.update = function() {
 			if (_isPaused) {
 				_globalTime = _pauseTime - _sysStartTime - _pauseOffset;
 			}
 			else {
-				_globalTime = sysTime - _sysStartTime - _pauseOffset;
+				_globalTime = (new Date().getTime()) - _sysStartTime - _pauseOffset;
 			}
-		}
+		};
 
 		retObj.start = function(startTime) {
 			_sysStartTime = startTime;
-		}
+		};
 
-		retObj.pause = function(pauseTime) {
+		retObj.pause = function() {
 			_isPaused = true;
-			_pauseTime = pauseTime;
-		}
+			_pauseTime = new Date().getTime();
+		};
 
-		retObj.resume = function(resumeTime) {
+		retObj.resume = function() {
 			_isPaused = false;
-			_pauseOffset += (resumeTime - _pauseTime);
-		}
+			_pauseOffset += ((new Date().getTime()) - _pauseTime);
+		};
 
 		retObj.getGlobalTime = function() {
 			return _globalTime;
-		}
+		};
 
 		retObj.clone = function() {
 			var copy = new constructor();
@@ -106,44 +106,44 @@ function() {
 			copy.setIsPaused(_isPaused);
 			copy.setPauseOffset(_pauseOffset);
 			return copy;
-		}
+		};
 
 		//setting features
 		retObj.setPauseTime = function(pT) {
 			_pauseTime = pT;
-		}
+		};
 
 		retObj.setIsPaused = function(iP) {
 			_isPaused = iP;
-		}
+		};
 
 		retObj.setPauseOffset = function(pO) {
 			_pauseOffset = pO;
-		}
+		};
 
 		retObj.setGlobalTime = function(gT) {
 			_globalTime = gT;
-		}
+		};
 
 		retObj.setSysStartTime = function(sT) {
 			_sysStartTime = sT;
-		}
+		};
 
 		retObj.setTimeOffset = function(tO) {
 			_timeOffset = tO;
-		}
+		};
 
 		retObj.setClipDuration = function(cD) {
 			_clipDuration = cD;
-		}
+		};
 
 		retObj.setGlobalClipDuration = function(gCD) {
 			_globalClipDuration = gCD;
-		}
+		};
 
 		retObj.getSysStartTime = function() {
 			return _sysStartTime;
-		}
+		};
 
 		//DEBUG ONLY
 		retObj._dbgDataDump = function() {
@@ -155,12 +155,12 @@ function() {
 				sysStartTime: _sysStartTime,
 				timeOffset: _timeOffset,
 				clipDuration: _clipDuration,
-				globalClipDuration: _globalClipDuration,
+				globalClipDuration: _globalClipDuration
 			};
-		}
+		};
 
 		return retObj;
-	};
+	}
 
 	return constructor;
 });

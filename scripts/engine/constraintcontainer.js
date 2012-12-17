@@ -8,9 +8,9 @@ function() {
 		var _constraint = constraint;
 		var _weight = weight || 1;
 
-		function retObj() {}
+		function ConstraintContainer() {}
 
-		Object.defineProperty(retObj, 'constraint', {
+		Object.defineProperty(ConstraintContainer, 'constraint', {
 			get: function() {
 				return _constraint;
 			},
@@ -19,7 +19,7 @@ function() {
 			}
 		});
 
-		Object.defineProperty(retObj, 'weight', {
+		Object.defineProperty(ConstraintContainer, 'weight', {
 			get: function() {
 				return _weight;
 			},
@@ -28,7 +28,7 @@ function() {
 			}
 		});
 
-		return retObj;
+		return ConstraintContainer;
 	}
 
 	return constructor;

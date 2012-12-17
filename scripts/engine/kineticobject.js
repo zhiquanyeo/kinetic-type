@@ -1,12 +1,8 @@
-define(['engine/numberattribute'],
-function(NumberAttribute) {
+define(['engine/numberattribute', 'engine/constants'],
+function(NumberAttribute, Constants) {
 	function constructor(name, delay, duration) {
 		
 		var that = this;
-		var PRETIME = 0;
-		var INTIME = 1;
-		var POSTTIME = 2;
-
 		//helpers
 		function generateTransforms(ktobj) {
 			var elem = ktobj.elem;
@@ -45,13 +41,13 @@ function(NumberAttribute) {
 		KTObject._time = new NumberAttribute(0);
 
 		KTObject._name = null;
-		KTObject._currTimeState = PRETIME;
+		KTObject._currTimeState = Constants.timeState.PRETIME;
 		KTObject._canvas = null;
 		KTObject._visible = true;
 
 		//End internal set up
 
-		KTObject.addToCanvas = function (canvas) {
+		KTObject.setCanvas = function(canvas) {
 			canvas.appendChild(elem);
 			KTObject._canvas = canvas;
 		};
@@ -64,20 +60,6 @@ function(NumberAttribute) {
 				};
 			}
 		});
-
-		//Enums
-		Object.defineProperty(KTObject, 'enums', {
-			get: function() {
-				return {
-					timeState: {
-						INTIME: INTIME,
-						PRETIME: PRETIME,
-						POSTTIME: POSTTIME
-					}
-				};
-			}
-		});
-
 
 		/*
 		The general idea:
@@ -294,16 +276,16 @@ function(NumberAttribute) {
 			// We are interested in the following:
 			// 1. Timeline time is NOT NaN and _currTimeState is PRETIME
 			// 2. Timeline time is NaN and _currTimeState is INTIME
-			if (KTObject._currTimeState === PRETIME && !isNaN(tempT)) {
+			if (KTObject._currTimeState === Constants.timeState.PRETIME && !isNaN(tempT)) {
 				//Set the state to INTIME
-				KTObject._currTimeState = INTIME;
+				KTObject._currTimeState = Constants.timeState.INTIME;
 			}
-			else if (KTObject._currTimeState === INTIME && isNaN(tempT)) {
-				KTObject._currTimeState = POSTTIME;
+			else if (KTObject._currTimeState === Constants.timeState.INTIME && isNaN(tempT)) {
+				KTObject._currTimeState = Constants.timeState.POSTTIME;
 			}
 
 			//Only change if we are INTIME
-			if (KTObject._currTimeState === INTIME) {
+			if (KTObject._currTimeState === Constants.timeState.INTIME) {
 				KTObject._time.val = tempT;
 			}
 		};
@@ -311,7 +293,7 @@ function(NumberAttribute) {
 		KTObject.draw = function() {
 			//TODO Implement
 			//Basically generate all the transforms
-			if (KTObject._currTimeState === POSTTIME || KTObject._currTimeState === PRETIME) {
+			if (KTObject._currTimeState === Constants.timeState.POSTTIME || KTObject._currTimeState === Constants.timeState.PRETIME) {
 				KTObject.elem.style.display = 'none';
 			}
 			else {
@@ -323,6 +305,10 @@ function(NumberAttribute) {
 
 		KTObject.getCurrTimeState = function() {
 			return KTObject._currTimeState;
+		};
+
+		KTObject.setVisible = function(val) {
+			KTObject._visible = val;
 		};
 
 

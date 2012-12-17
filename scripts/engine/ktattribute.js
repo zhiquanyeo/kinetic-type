@@ -17,7 +17,7 @@ function(FirstItemCompositor, ConstraintContainer) {
 		var that = this;
 
 		//Obj to be returned
-		function retObj() {
+		function KTAttribute() {
 
 		}
 
@@ -28,7 +28,6 @@ function(FirstItemCompositor, ConstraintContainer) {
 		 */
 		function computeValue(attr) {
 			attr.rawVal = attr._compositor.calculateValue(attr._constraintArray, attr);
-			
 		}
 
 		function initializeValue(attr, initialVal) {
@@ -64,20 +63,20 @@ function(FirstItemCompositor, ConstraintContainer) {
 		var MARKED_OOD		= 1;
 		var HAS_ACTION 		= 2;
 		var INITIAL_FLAGS	= MARKED_OOD;
-		retObj.MARKED_OOD 		= MARKED_OOD;
-		retObj.HAS_ACTION 		= HAS_ACTION
-		retObj.INITIAL_FLAGS	= MARKED_OOD;
+		KTAttribute.MARKED_OOD 		= MARKED_OOD;
+		KTAttribute.HAS_ACTION 		= HAS_ACTION
+		KTAttribute.INITIAL_FLAGS	= MARKED_OOD;
 
 		//Internal variables
 		/** Value of this object */
-		retObj._value = null;
+		KTAttribute._value = null;
 
 		/** 
 		 * Collection of bits used as binary flags. Used to describe state of
 		 * the attribute. Constants provided, giving symbolic name for bit 
 		 * positions
 		 */
-		 retObj._flags = retObj.INITIAL_FLAGS;
+		 KTAttribute._flags = KTAttribute.INITIAL_FLAGS;
 
 		 /**
 		  * The set of attributes which currently use this attribute to compute their values
@@ -92,40 +91,40 @@ function(FirstItemCompositor, ConstraintContainer) {
 		  * based on requests for the value. This allows the set to reflect the actual dynamic
 		  * dependencies that are currently in place
 		  */
-		retObj._usedBySet = [];
+		KTAttribute._usedBySet = [];
 
 		/**
 		 * Array of constraints
 		 */
-		retObj._constraintArray = [];
-
+		KTAttribute._constraintArray = [];
+		
 		/**
 		 * Parent object which owns this attribute
 		 */
-		retObj._parent = null;
+		KTAttribute._parent = null;
 
 		/**
 		 * The compositor object for this attribute
 		 */
-		retObj._compositor = null;
+		KTAttribute._compositor = null;
 
 
 		/** Value of this attribute */
-		Object.defineProperty(retObj, "val", {
+		Object.defineProperty(KTAttribute, "val", {
 			get: function() {
-				return retObj.useVal(retObj, null);
+				return KTAttribute.useVal(KTAttribute, null);
 			},
 			set: function(newVal) {
 				//Mark as up to date, so that traversal starts here
-				clearFlag(retObj, MARKED_OOD);
+				clearFlag(KTAttribute, MARKED_OOD);
 
 				//Start OOD traversal
-				retObj.markOOD(retObj);
+				KTAttribute.markOOD(KTAttribute);
 
-				retObj.rawVal = newVal;
+				KTAttribute.rawVal = newVal;
 
 				//Used to break cycles
-				clearFlag(retObj, MARKED_OOD);
+				clearFlag(KTAttribute, MARKED_OOD);
 			}
 		});
 
@@ -134,83 +133,84 @@ function(FirstItemCompositor, ConstraintContainer) {
 		 * of objects using this attribute
 		 */
 
-		Object.defineProperty(retObj, "rawVal", {
+		Object.defineProperty(KTAttribute, "rawVal", {
 			get: function() {
-				return retObj._value;
+				return KTAttribute._value;
 			},
 			set: function(newVal) {
-				retObj._value = newVal;
+				KTAttribute._value = newVal;
 			}
 		});
 
-		Object.defineProperty(retObj, 'compositor', {
+		Object.defineProperty(KTAttribute, 'compositor', {
 			get: function() {
-				return retObj._compositor;
+				return KTAttribute._compositor;
 			},
 			set: function(val) {
-				retObj._compositor = val;
-				retObj.markOOD(retObj);
+				KTAttribute._compositor = val;
+				KTAttribute.markOOD(KTAttribute);
 			}
 		});
 
-		Object.defineProperty(retObj, 'parent', {
+		Object.defineProperty(KTAttribute, 'parent', {
 			get: function() {
-				return retObj._parent;
+				return KTAttribute._parent;
 			},
 			set: function(val) {
-				retObj._parent = val;
+				KTAttribute._parent = val;
 			}
 		});
 
-		Object.defineProperty(retObj, 'numConstraints', {
+		Object.defineProperty(KTAttribute, 'numConstraints', {
 			get: function() {
-				return retObj._constraintArray.length;
+				return KTAttribute._constraintArray.length;
 			}
 		});
 
-		Object.defineProperty(retObj, 'flags', {
+		Object.defineProperty(KTAttribute, 'flags', {
 			get: function() {
-				return retObj._flags;
+				return KTAttribute._flags;
 			}
 		});
 
 		//Public methods
-		retObj.isOOD = function() {
-			return flagSet(retObj, MARKED_OOD);
+		KTAttribute.isOOD = function() {
+			return flagSet(KTAttribute, MARKED_OOD);
 		};
 
 		/**
 		 * Mark dependents out of date if they are not already marked as such
 		 */
-		retObj.markOOD = function(fromObj) {
+		KTAttribute.markOOD = function(fromObj) {
 			//Only do stuff if we are not already marked as OOD (prevents cycles)
-			if (!flagSet(retObj, MARKED_OOD)) {
+			if (!flagSet(KTAttribute, MARKED_OOD)) {
 				//Mark us as OOD, do this first to prevent cycles
-				setFlag(retObj, MARKED_OOD);
+				setFlag(KTAttribute, MARKED_OOD);
 
 				//Loop through all our dependents and mark them as OOD
-				for (var i in retObj._usedBySet) {
-					var dep = retObj._usedBySet[i];
-					dep.markOOD(retObj);
+				for (var i in KTAttribute._usedBySet) {
+					var dep = KTAttribute._usedBySet[i];
+					dep.markOOD(KTAttribute);
 				}
 
-				clearUsedBySet(retObj);
+				clearUsedBySet(KTAttribute);
 			}
 		};
 
 		/**
 		 * Adds a constraint of this attribute
 		 */
-		retObj.addConstraint = function(newConstraint) {
-			retObj._constraintArray.push(new ConstraintContainer(newConstraint));
+		KTAttribute.addConstraint = function(newConstraint) {
+			KTAttribute._constraintArray.push(new ConstraintContainer(newConstraint));
+			console.log('cosntraint added');
 		};
 
 		/**
 		 * Mark this attribute as OOD
 		 */
-		retObj.modVal = function() {
-			var result = retObj.val;
-			retObj.markOOD(retObj);
+		KTAttribute.modVal = function() {
+			var result = KTAttribute.val;
+			KTAttribute.markOOD(KTAttribute);
 			return result;
 		};
 
@@ -218,27 +218,27 @@ function(FirstItemCompositor, ConstraintContainer) {
 		 * Computes and then modifies the raw value, then adds usingObj to the list
 		 * of objects using this attribute.
 		 */
-		retObj.useVal = function(usingObj) {
-			if (flagSet(retObj, MARKED_OOD)) {
+		KTAttribute.useVal = function(usingObj) {
+			if (flagSet(KTAttribute, MARKED_OOD)) {
 				//Unmark OOD first so we can break cyclic dependencies
-				clearFlag(retObj, MARKED_OOD);
+				clearFlag(KTAttribute, MARKED_OOD);
 
-				computeValue(retObj);
+				computeValue(KTAttribute);
 			}
 
-			addUsedBy(retObj, usingObj);
+			addUsedBy(KTAttribute, usingObj);
 
-			return retObj._value;
-		}
+			return KTAttribute._value;
+		};
 
 		//==== Initialization code =====
-		initializeValue(retObj, initialVal);
+		initializeValue(KTAttribute, initialVal);
 
 		if (!initialCompositor) {
-			retObj._compositor = new FirstItemCompositor();
+			KTAttribute._compositor = new FirstItemCompositor();
 		}
 
-		return retObj;
+		return KTAttribute;
 	}
 
 	return constructor;

@@ -2,11 +2,11 @@ define([],
 function() {
 	function constructor() {
 
-		function retObj() {
+		function FirstItemCompositor() {
 
 		}
 
-		retObj.calculateValue = function(constraintArray, targetAttribute) {
+		FirstItemCompositor.calculateValue = function(constraintArray, targetAttribute) {
 			if (constraintArray.length == 0) {
 				return targetAttribute.rawVal;
 			}
@@ -14,9 +14,9 @@ function() {
 				var constraint = (constraintArray[0]).constraint;
 				return constraint(targetAttribute);
 			}
-		}
+		};
 
-		return retObj;
+		return FirstItemCompositor;
 	}
 
 	return constructor;

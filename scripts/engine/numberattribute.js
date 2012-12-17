@@ -27,7 +27,7 @@ function(KTAttribute) {
 		Object.defineProperty(retObj, 'numberVal', {
 			get: function() {
 				return retObj.useVal(null);
-			}, 
+			},
 			set: function(newVal) {
 				if (newVal < retObj._lowerBound)
 					retObj.val = retObj._lowerBound;
